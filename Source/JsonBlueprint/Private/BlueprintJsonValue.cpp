@@ -26,8 +26,8 @@ bool UBlueprintJsonValue::ParseArray(FString JsonString, TArray<UBlueprintJsonVa
 	if (!success)
 		return false;
 
-	for (TSharedPtr<FJsonValue> Value : *vals) {
-		Values.Add(UBlueprintJsonValue::FromSharedPointer(Value));
+	for (TSharedPtr<FJsonValue> val : *vals) {
+		Values.Add(UBlueprintJsonValue::FromSharedPointer(val));
 	}
 
 	return true;
@@ -74,6 +74,24 @@ UBlueprintJsonValue* UBlueprintJsonValue::FromFloat(float Value) {
 
 UBlueprintJsonValue* UBlueprintJsonValue::FromString(FString Value) {
 	TSharedPtr<FJsonValue> JsonValue = MakeShareable(new FJsonValueString(Value));
+	UBlueprintJsonValue* val = NewObject<UBlueprintJsonValue>();
+	val->SetSharedPointer(JsonValue);
+	return val;
+}
+
+UBlueprintJsonValue* UBlueprintJsonValue::FromObject(UBlueprintJsonObject* Value) {
+	TSharedPtr<FJsonValue> JsonValue = MakeShareable(new FJsonValueObject(Value->ToSharedPointer()));
+	UBlueprintJsonValue* val = NewObject<UBlueprintJsonValue>();
+	val->SetSharedPointer(JsonValue);
+	return val;
+}
+
+UBlueprintJsonValue* UBlueprintJsonValue::FromArray(TArray<UBlueprintJsonValue*> Value) {
+	TArray<TSharedPtr<FJsonValue>> vals;
+	for (UBlueprintJsonValue* Val : Value) {
+		vals.Add(Val->ToSharedPointer());
+	}
+	TSharedPtr<FJsonValue> JsonValue = MakeShareable(new FJsonValueArray(vals));
 	UBlueprintJsonValue* val = NewObject<UBlueprintJsonValue>();
 	val->SetSharedPointer(JsonValue);
 	return val;

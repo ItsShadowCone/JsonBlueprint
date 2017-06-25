@@ -72,6 +72,18 @@ public:
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "From String", Keywords = "Json From String", ShortTooltip = "Creates a Json value from a string"), Category = "Json|Value")
 	static UBlueprintJsonValue* FromString(FString Value);
 
+	// Creates a Json value from a Json Object
+	//
+	// Casts the Json Object to a Json value so it can be added to an array
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "From Object", Keywords = "Json From Object", ShortTooltip = "Creates a Json value from a Object"), Category = "Json|Value")
+	static UBlueprintJsonValue* FromObject(UBlueprintJsonObject* Value);
+
+	// Creates a Json value from a Json Array
+	//
+	// Casts the Json Array to a Json value so it can be added to an array
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "From Array", Keywords = "Json From Array", ShortTooltip = "Creates a Json value from a Array"), Category = "Json|Value")
+	static UBlueprintJsonValue* FromArray(TArray<UBlueprintJsonValue*> Value);
+
 	
 	// Casts the Json value to a boolean
 	//

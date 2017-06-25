@@ -35,6 +35,6 @@ Using one of the Has methods before a Get method is not needed, the Get methods 
 
 ## Platforms tested
 
-Windows, Mac 
+Windows, Mac, Linux
 
 Should work with all platforms
