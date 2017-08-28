@@ -63,7 +63,8 @@ bool UBlueprintJsonObject::GetValue(FString Key, UBlueprintJsonValue*& Value) {
 }
 
 UBlueprintJsonObject* UBlueprintJsonObject::SetValue(FString Key, UBlueprintJsonValue* Value) {
-	mJsonObject->SetField(Key, Value->ToSharedPointer());
+	if (Value != nullptr)
+		mJsonObject->SetField(Key, Value->ToSharedPointer());
 	return this;
 }
 
@@ -159,7 +160,8 @@ bool UBlueprintJsonObject::GetObject(FString Key, UBlueprintJsonObject*& Value) 
 }
 
 UBlueprintJsonObject* UBlueprintJsonObject::SetObject(FString Key, UBlueprintJsonObject* Value) {
-	mJsonObject->SetObjectField(Key, Value->ToSharedPointer());
+	if (Value != nullptr)
+		mJsonObject->SetObjectField(Key, Value->ToSharedPointer());
 	return this;
 }
 
@@ -185,7 +187,8 @@ bool UBlueprintJsonObject::GetArray(FString Key, TArray<UBlueprintJsonValue*>& V
 UBlueprintJsonObject* UBlueprintJsonObject::SetArray(FString Key, TArray<UBlueprintJsonValue*> Values) {
 	TArray<TSharedPtr<FJsonValue>> vals;
 	for (UBlueprintJsonValue* Value : Values) {
-		vals.Add(Value->ToSharedPointer());
+		if (Value != nullptr)
+			vals.Add(Value->ToSharedPointer());
 	}
 	mJsonObject->SetArrayField(Key, vals);
 	return this;
